@@ -15,7 +15,7 @@ export default new Router({
     {
       path: '/login',
       name: 'login',
-      component: () => import(/* webpackChunkName: 'login' */ '@/views/login/index.vue')
+      component: () => import(/* webpackChunkName: 'login' */ '@/views/login/index.vue'),
     },
     {
       path: '/',
@@ -24,14 +24,14 @@ export default new Router({
         {
           path: '',
           name: 'home',
-          component: () => import(/* webpackChunkName: 'home' */ '@/views/home/index.vue')
-        }
-      ]
+          component: () => import(/* webpackChunkName: 'home' */ '@/views/home/index.vue'),
+        },
+      ],
     },
     {
       path: '*',
       name: '404',
-      component: () => import(/* webpackChunkName: 'error-page' */ '@/views/error-page/404.vue')
-    }
+      component: () => import(/* webpackChunkName: 'error-page' */ '@/views/error-page/404.vue'),
+    },
   ],
 });
