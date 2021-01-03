@@ -26,6 +26,41 @@ export default new Router({
           name: 'home',
           component: () => import(/* webpackChunkName: 'home' */ '@/views/home/index.vue'),
         },
+        {
+          path: '/role',
+          name: 'role',
+          component: () => import(/* webpackChunkName: 'home' */ '@/views/role/index.vue'),
+        },
+        {
+          path: '/menu',
+          name: 'menu',
+          component: () => import(/* webpackChunkName: 'home' */ '@/views/menu/index.vue'),
+        },
+        {
+          path: '/resource',
+          name: 'resource',
+          component: () => import(/* webpackChunkName: 'home' */ '@/views/resource/index.vue'),
+        },
+        {
+          path: '/course',
+          name: 'course',
+          component: () => import(/* webpackChunkName: 'home' */ '@/views/course/index.vue'),
+        },
+        {
+          path: '/user',
+          name: 'user',
+          component: () => import(/* webpackChunkName: 'home' */ '@/views/user/index.vue'),
+        },
+        {
+          path: '/advert',
+          name: 'advert',
+          component: () => import(/* webpackChunkName: 'home' */ '@/views/advert/index.vue'),
+        },
+        {
+          path: '/advert-space',
+          name: 'advert-space',
+          component: () => import(/* webpackChunkName: 'home' */ '@/views/advert-space/index.vue'),
+        },
       ],
     },
     {
