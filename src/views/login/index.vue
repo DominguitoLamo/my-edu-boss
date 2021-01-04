@@ -11,10 +11,10 @@
      class="login-form"
     >
       <el-form-item label="手機號">
-        <el-input v-model="form.name"></el-input>
+        <el-input v-model="form.phone"></el-input>
       </el-form-item>
       <el-form-item label="密碼">
-        <el-input v-model="form.name"></el-input>
+        <el-input v-model="form.password"></el-input>
       </el-form-item>
       <el-form-item>
         <el-button type="primary" @click="onSubmit" class="login-button">登錄</el-button>
@@ -31,14 +31,8 @@ export default Vue.extend({
   data() {
     return {
       form: {
-        name: '',
-        region: '',
-        date1: '',
-        date2: '',
-        delivery: false,
-        type: [],
-        resource: '',
-        desc: ''
+        phone: '15510792995',
+        password: '111111',
       }
     }
   },

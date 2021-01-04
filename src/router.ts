@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import Router from 'vue-router';
 import Layout from '@/layout/index.vue';
+import store from './store';
 
 Vue.use(Router);
 
@@ -8,7 +9,7 @@ Vue.use(Router);
 /*
 component的import可以實現動態加載，webpackChunkName可以設定打包後的模块名字
 */
-export default new Router({
+const router =  new Router({
   mode: 'history',
   base: process.env.BASE_URL,
   routes: [
@@ -20,6 +21,9 @@ export default new Router({
     {
       path: '/',
       component: Layout ,
+      meta: {
+        requiresAuth: true,
+      },
       children: [
         {
           path: '',
@@ -70,3 +74,23 @@ export default new Router({
     },
   ],
 });
+
+router.beforeEach((to, from, next) => {
+  if (to.matched.some(record => record.meta.requiresAuth)) {
+    if (!store.state.user) {
+      next({
+        name: 'login',
+        query: {
+          redirect: to.fullPath,
+        }
+      })
+    } else {
+      next()
+    }
+  } else {
+    next ()
+  }
+}) 
+  
+
+export default router
