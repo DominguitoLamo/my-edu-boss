@@ -1,7 +1,85 @@
 <template>
-    <div>
+    <div class="role-list">
+        <el-card class="box-card">
+            <div slot="header" class="clearfix">
+                <el-form ref="form" :model="form">
+                    <el-form-item label="角色名称" prop="name">
+                        <el-input v-model="form.name"></el-input>
+                    </el-form-item>
+                              <el-form-item>
+                                <el-button
+                                type="primary"
+                                @click="onSubmit"
+                                :disabled="loading"
+                                >查询搜索</el-button>
+                                <el-button
+                                :disabled="loading"
+                                @click="onReset"
+                                >重置</el-button>
+                            </el-form-item>
+                </el-form>
+            </div>
+            <el-button @click="handleAdd">添加角色</el-button>
+            <el-table
+              :data="roles"
+              style="width: 100%"  
+              v-loading="loading"
+            >
+              <el-table-column
+                prop="id"
+                label="编号"
+              />
+              <el-table-column
+                prop="name"
+                label="角色名称"
+              />
+              <el-table-column
+                prop="description"
+                label="描述"
+              />
+              <el-table-column
+                prop="createdTime"
+                label="添加时间"
+              />
+              <el-table-column
+                label="操作"
+                align="center"
+                width="150px"
+              >
+                <template slot-scope="scope">
+                    <div>
+                      <el-button
+                        type="text"
+                        @click="handleEdit(scope.row)"
+                      >编辑</el-button>
+                      <el-button
+                        size="mini"
+                        type="text"
+                        @click="handleDelete(scope.row)"
+                      >删除</el-button>
+                    </div>
+                </template>
+              </el-table-column>
+              >
+            </el-table>
+        </el-card>
 
+        <el-dialog
+          :title="isEdit ? '编辑角色' : '添加角色'"
+          :visible.sync="dialogVisible"
+          width="50%"
+        >
+          <template v-if="dialogVisible">
+              <create-or-edit
+                :roleId="roleId"
+                :isEdit="isEdit"
+                @success="onSuccess"
+                @cancel="dialogVisible = false"
+              />
+          </template>
+        </el-dialog>
     </div>
+    
 </template>
 
 <script lang="ts">
