@@ -17,6 +17,7 @@
                                 @click="onReset"
                                 >重置</el-button>
                             </el-form-item>
+
                 </el-form>
             </div>
             <el-button @click="handleAdd">添加角色</el-button>
@@ -47,6 +48,27 @@
                 width="150px"
               >
                 <template slot-scope="scope">
+                    <div>
+                      <el-button
+                        type="text"
+                        @click="$router.push({
+                          name: 'alloc-menu',
+                          params: {
+                            roleId: scope.row.id
+                          }
+                        })"
+                      >分配菜單</el-button>
+                      <el-button
+                        size="mini"
+                        type="text"
+                        @click="$router.push({
+                          name: 'alloc-resource',
+                          params: {
+                            roleId: scope.row.id
+                          }
+                        })"
+                      >分配資源</el-button>
+                    </div>
                     <div>
                       <el-button
                         type="text"

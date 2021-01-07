@@ -1,5 +1,4 @@
 <template>
-  <div>
   <div class="alloc-resource">
     <el-card>
       <div slot="header">
