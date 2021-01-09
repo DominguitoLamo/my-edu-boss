@@ -249,7 +249,6 @@ export default Vue.extend({
     },
 
     handleShowAddLesson (data: any) {
-      console.log(data)
       this.lesson = {
         sectionName: data.sectionName,
         sectionId: data.id,
@@ -303,7 +302,6 @@ export default Vue.extend({
         }))
         this.$message.success('排序成功')
       } catch (err) {
-        console.log(err)
         this.$message.error('排序失败')
       }
       this.isLoading = false
