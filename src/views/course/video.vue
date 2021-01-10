@@ -92,7 +92,6 @@ export default {
         retryDuration: 2,
         // 开始上传
         onUploadstarted: async uploadInfo => {
-          console.log('onUploadstarted', uploadInfo)
           let uploadAuthInfo = null
           if (uploadInfo.isImage) {
             const { data } = await aliyunImagUploadAddressAdnAuth()
@@ -118,10 +117,11 @@ export default {
         // 文件上传成功
         onUploadSucceed: function (uploadInfo) {
           console.log('onUploadSucceed', uploadInfo)
+          this.$message.success('Upload success');
         },
         // 文件上传失败
         onUploadFailed: function (uploadInfo, code, message) {
-          console.log('onUploadFailed')
+          this.$message.error('Upload fail')
         },
         // 文件上传进度，单位：字节
         onUploadProgress: (uploadInfo, totalSize, loadedPercent) => {
@@ -132,32 +132,23 @@ export default {
         // 上传凭证超时
         onUploadTokenExpired: function (uploadInfo) {
           console.log('onUploadTokenExpired')
+          this.$message.error('Upload expired')
         },
         // 全部文件上传结束
         onUploadEnd: async uploadInfo => {
           this.isUploadSuccess = true
-          console.log(uploadInfo)
-          console.log({
-            lessonId: this.$route.query.lessonId,
-            fileId: this.videoId,
-            coverImageUrl: this.imageUrl,
-            fileName: this.fileName
-          })
           const { data } = await transCodeVideo({
             lessonId: this.$route.query.lessonId,
             fileId: this.videoId,
             coverImageUrl: this.imageUrl,
             fileName: this.fileName
           })
-          console.log(data)
 
           const timer = setInterval(async () => {
-              const { data } = await getAliyunTransCodePercent(this.$route.query.lessonId)
-              console.log('转码进度', data)
+              const { data } = await getAliyunTransCodePercent(this.$route.query.lessonId);
               if (data.data === 100) {
-                this.isTransCodeSuccess = true
-                window.clearInterval(timer)
-                console.log('转码成功')
+                this.isTransCodeSuccess = true;
+                window.clearInterval(timer);
               }
           }, 3000)
         }

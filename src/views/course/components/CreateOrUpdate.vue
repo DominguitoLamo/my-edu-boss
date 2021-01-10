@@ -156,31 +156,31 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue'
+import Vue from 'vue';
 import {
   saveOrUpdateCourse,
-  getCourseById
-} from '@/services/course'
-import CourseImage from './CourseImage.vue'
-import TextEditor from '@/components/TextEditor/index.vue'
-import moment from 'moment'
+  getCourseById,
+} from '@/services/course';
+import CourseImage from './CourseImage.vue';
+import TextEditor from '@/components/TextEditor/index.vue';
+import moment from 'moment';
 
 export default Vue.extend({
   name: 'CreateOrUpdateCourse',
   props: {
     isEdit: {
       type: Boolean,
-      default: false
+      default: false,
     },
     courseId: {
-      type: [String, Number]
-    }
+      type: [String, Number],
+    },
   },
   components: {
     CourseImage,
-    TextEditor
+    TextEditor,
   },
-  data () {
+  data() {
     return {
       activeStep: 0,
       steps: [
@@ -188,7 +188,7 @@ export default Vue.extend({
         { title: '课程封面', icon: 'el-icon-edit' },
         { title: '销售信息', icon: 'el-icon-edit' },
         { title: '秒杀活动', icon: 'el-icon-edit' },
-        { title: '课程详情', icon: 'el-icon-edit' }
+        { title: '课程详情', icon: 'el-icon-edit' },
       ],
       course: {
         // id: 0,
@@ -200,7 +200,7 @@ export default Vue.extend({
           teacherName: '',
           teacherHeadPicUrl: '',
           position: '',
-          description: ''
+          description: '',
         },
         courseDescriptionMarkDown: '',
         price: 0,
@@ -223,37 +223,37 @@ export default Vue.extend({
           beginTime: '',
           endTime: '',
           amount: 0,
-          stock: 0
+          stock: 0,
         },
-        autoOnlineTime: ''
-      }
-    }
+        autoOnlineTime: '',
+      },
+    };
   },
-  created () {
+  created() {
     if (this.isEdit) {
-      this.loadCourse()
+      this.loadCourse();
     }
   },
   methods: {
-    async loadCourse () {
-      const { data } = await getCourseById(this.courseId)
-      const { activityCourseDTO } = data.data
-      activityCourseDTO.beginTime = moment(activityCourseDTO.beginTime).format('YYYY-MM-DD')
-      activityCourseDTO.endTime = moment(activityCourseDTO.endTime).format('YYYY-MM-DD')
-      this.course = data.data
+    async loadCourse() {
+      const { data } = await getCourseById(this.courseId);
+      const { activityCourseDTO } = data.data;
+      activityCourseDTO.beginTime = moment(activityCourseDTO.beginTime).format('YYYY-MM-DD');
+      activityCourseDTO.endTime = moment(activityCourseDTO.endTime).format('YYYY-MM-DD');
+      this.course = data.data;
     },
 
-    async handleSave () {
-      const { data } = await saveOrUpdateCourse(this.course)
+    async handleSave() {
+      const { data } = await saveOrUpdateCourse(this.course);
       if (data.code === '000000') {
-        this.$message.success('保存成功')
-        this.$router.push('/course')
+        this.$message.success('保存成功');
+        this.$router.push('/course');
       } else {
-        this.$message.error('保存失败')
+        this.$message.error('保存失败');
       }
-    }
-  }
-})
+    },
+  },
+});
 </script>
 
 <style lang="scss" scoped>

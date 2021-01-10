@@ -140,39 +140,39 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue'
+import Vue from 'vue';
 import {
   getSectionAndLesson,
   saveOrUpdateSection,
-  getSectionById
-} from '@/services/course-section'
-import { getCourseById } from '@/services/course'
-import { Form } from 'element-ui'
-import { saveOrUpdateLesson } from '@/services/course-lesson'
+  getSectionById,
+} from '@/services/course-section';
+import { getCourseById } from '@/services/course';
+import { Form } from 'element-ui';
+import { saveOrUpdateLesson } from '@/services/course-lesson';
 
 export default Vue.extend({
   name: 'CourseSection',
   props: {
     courseId: {
       type: [String, Number],
-      required: true
-    }
+      required: true,
+    },
   },
-  data () {
+  data() {
     const defaultProps = {
       children: 'lessonDTOS',
-      label (data: any) {
-        return data.sectionName || data.theme
-      }
-    }
+      label(data: any) {
+        return data.sectionName || data.theme;
+      },
+    };
 
     const section = {
       courseId: this.courseId,
       sectionName: '',
       description: '',
       orderNum: 0,
-      status: 0
-    }
+      status: 0,
+    };
 
     const lesson = {
       courseId: this.courseId,
@@ -182,8 +182,8 @@ export default Vue.extend({
       duration: 0,
       isFree: false,
       orderNum: 0,
-      status: 0
-    }
+      status: 0,
+    };
 
     return {
       course: {},
@@ -193,62 +193,62 @@ export default Vue.extend({
       section,
       isAddLessonShow: false,
       lesson,
-      isLoading: false
-    }
+      isLoading: false,
+    };
   },
 
-  created () {
-    this.loadSections()
-    this.loadCourse()
+  created() {
+    this.loadSections();
+    this.loadCourse();
   },
 
   methods: {
-    async loadCourse () {
-      const { data } = await getCourseById(this.courseId)
-      this.course = data.data
+    async loadCourse() {
+      const { data } = await getCourseById(this.courseId);
+      this.course = data.data;
     },
 
-    async loadSections () {
-      const { data } = await getSectionAndLesson(this.courseId)
-      this.sections = data.data
+    async loadSections() {
+      const { data } = await getSectionAndLesson(this.courseId);
+      this.sections = data.data;
     },
 
-    handleShowAddSection () {
+    handleShowAddSection() {
       this.section = { // 防止数据还是编辑时获取的数据
         courseId: this.courseId,
         sectionName: '',
         description: '',
         orderNum: 0,
-        status: 0
-      }
-      this.isAddSectionShow = true
+        status: 0,
+      };
+      this.isAddSectionShow = true;
     },
 
-    async handleAddSection () {
-      await saveOrUpdateSection(this.section)
-      this.loadSections()
-      this.isAddSectionShow = false
-      ;(this.$refs['section-form'] as Form).resetFields()
-      this.$message.success('操作成功')
+    async handleAddSection() {
+      await saveOrUpdateSection(this.section);
+      this.loadSections();
+      this.isAddSectionShow = false;
+      (this.$refs['section-form'] as Form).resetFields();
+      this.$message.success('操作成功');
     },
 
-    async handleEditSectionShow (section: any) {
-      const { data } = await getSectionById(section.id)
-      this.section = data.data
-      this.isAddSectionShow = true
+    async handleEditSectionShow(section: any) {
+      const { data } = await getSectionById(section.id);
+      this.section = data.data;
+      this.isAddSectionShow = true;
     },
 
-    async handleSectionStatusChange (section: any) {
-      await saveOrUpdateSection(section)
-      this.$message.success('操作成功')
+    async handleSectionStatusChange(section: any) {
+      await saveOrUpdateSection(section);
+      this.$message.success('操作成功');
     },
 
-    async handleLessonStatusChange (lesson: any) {
-      await saveOrUpdateLesson(lesson)
-      this.$message.success('操作成功')
+    async handleLessonStatusChange(lesson: any) {
+      await saveOrUpdateLesson(lesson);
+      this.$message.success('操作成功');
     },
 
-    handleShowAddLesson (data: any) {
+    handleShowAddLesson(data: any) {
       this.lesson = {
         sectionName: data.sectionName,
         sectionId: data.id,
@@ -257,57 +257,57 @@ export default Vue.extend({
         duration: 0,
         isFree: false,
         orderNum: 0,
-        status: 0
-      }
-      this.isAddLessonShow = true
+        status: 0,
+      };
+      this.isAddLessonShow = true;
     },
 
-    async handleAddLesson () {
-      await saveOrUpdateLesson(this.lesson)
-      this.$message.success('操作成功')
-      this.loadSections()
-      this.isAddLessonShow = false
+    async handleAddLesson() {
+      await saveOrUpdateLesson(this.lesson);
+      this.$message.success('操作成功');
+      this.loadSections();
+      this.isAddLessonShow = false;
     },
 
-    handleShowEditLesson (lesson: any, section: any) {
-      this.lesson = lesson
-      this.lesson.sectionName = section.sectionName
-      this.isAddLessonShow = true
+    handleShowEditLesson(lesson: any, section: any) {
+      this.lesson = lesson;
+      this.lesson.sectionName = section.sectionName;
+      this.isAddLessonShow = true;
     },
 
-    handleAllowDrop (draggingNode: any, dropNode: any, type: any) {
+    handleAllowDrop(draggingNode: any, dropNode: any, type: any) {
       // draggingNode 拖动的节点
       // dropNode 放置的目标节点
       // type：'prev'、'inner' 和 'next'，分别表示放置在目标节点前、插入至目标节点和放置在目标节点后
-      return draggingNode.data.sectionId === dropNode.data.sectionId && type !== 'inner'
+      return draggingNode.data.sectionId === dropNode.data.sectionId && type !== 'inner';
     },
 
-    async handleSort (dragNode: any, dropNode: any) {
-      this.isLoading = true
+    async handleSort(dragNode: any, dropNode: any) {
+      this.isLoading = true;
       try {
         await Promise.all(dropNode.parent.childNodes.map((item: any, index: number) => {
           if (dragNode.data.lessonDTOS) {
             // 阶段
             return saveOrUpdateSection({
               id: item.data.id,
-              orderNum: index + 1
-            })
+              orderNum: index + 1,
+            });
           } else {
             // 课时
             return saveOrUpdateLesson({
               id: item.data.id,
-              orderNum: index + 1
-            })
+              orderNum: index + 1,
+            });
           }
-        }))
-        this.$message.success('排序成功')
+        }));
+        this.$message.success('排序成功');
       } catch (err) {
-        this.$message.error('排序失败')
+        this.$message.error('排序失败');
       }
-      this.isLoading = false
-    }
-  }
-})
+      this.isLoading = false;
+    },
+  },
+});
 </script>
 
 <style lang="scss" scoped>

@@ -4,15 +4,15 @@
   </div>
 </template>
 <script lang="ts">
-import Vue from 'vue'
-import CourseList from './components/CourseList.vue'
+import Vue from 'vue';
+import CourseList from './components/CourseList.vue';
 
 export default Vue.extend({
   name: 'CoursePage',
   components: {
-    CourseList
-  }
-})
+    CourseList,
+  },
+});
 </script>
 <style lang="scss" scoped>
 

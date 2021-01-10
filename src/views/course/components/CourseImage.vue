@@ -22,63 +22,63 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue'
-import { uploadCourseImage } from '@/services/course'
+import Vue from 'vue';
+import { uploadCourseImage } from '@/services/course';
 
 export default Vue.extend({
   name: 'CourseImage',
   props: {
     value: {
-      type: String
+      type: String,
     },
     limit: {
       type: Number,
-      default: 2
-    }
+      default: 2,
+    },
   },
-  data () {
+  data() {
     return {
       isUploading: false,
-      percentage: 0
-    }
+      percentage: 0,
+    };
   },
   methods: {
-    beforeAvatarUpload (file: any) {
-      const isJPG = file.type === 'image/jpeg'
-      const isLt2M = file.size / 1024 / 1024 < this.limit
+    beforeAvatarUpload(file: any) {
+      const isJPG = file.type === 'image/jpeg';
+      const isLt2M = file.size / 1024 / 1024 < this.limit;
 
       if (!isJPG) {
-        this.$message.error('上传头像图片只能是 JPG 格式!')
+        this.$message.error('上传头像图片只能是 JPG 格式!');
       }
       if (!isLt2M) {
-        this.$message.error(`上传头像图片大小不能超过 ${this.limit}MB!`)
+        this.$message.error(`上传头像图片大小不能超过 ${this.limit}MB!`);
       }
-      return isJPG && isLt2M
+      return isJPG && isLt2M;
     },
 
-    async handleUpload (options: any) {
+    async handleUpload(options: any) {
       try {
-        this.isUploading = true
-        const fd = new FormData()
-        fd.append('file', options.file)
-        const { data } = await uploadCourseImage(fd, e => {
-          this.percentage = Math.floor(e.loaded / e.total * 100)
-        })
+        this.isUploading = true;
+        const fd = new FormData();
+        fd.append('file', options.file);
+        const { data } = await uploadCourseImage(fd, (e) => {
+          this.percentage = Math.floor(e.loaded / e.total * 100);
+        });
         if (data.code === '000000') {
-          this.isUploading = false
-          this.percentage = 0
-          this.$emit('input', data.data.name)
+          this.isUploading = false;
+          this.percentage = 0;
+          this.$emit('input', data.data.name);
         } else {
-          this.$message.error('上传失败')
+          this.$message.error('上传失败');
         }
       } catch (err) {
-        console.log(err)
+        this.$message.error(err);
       }
-      this.isUploading = false
-      this.percentage = 0
-    }
-  }
-})
+      this.isUploading = false;
+      this.percentage = 0;
+    },
+  },
+});
 </script>
 
 <style lang="scss" scoped>

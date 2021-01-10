@@ -8,21 +8,21 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue'
-import CreateOrUpdate from './components/CreateOrUpdate.vue'
+import Vue from 'vue';
+import CreateOrUpdate from './components/CreateOrUpdate.vue';
 
 export default Vue.extend({
   name: 'CourseEdit',
   props: {
     courseId: {
       type: [String, Number],
-      required: true
-    }
+      required: true,
+    },
   },
   components: {
-    CreateOrUpdate
-  }
-})
+    CreateOrUpdate,
+  },
+});
 </script>
 
 <style lang="scss" scoped>

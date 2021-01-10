@@ -123,69 +123,69 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue'
-import { getQueryCourses, changeState } from '@/services/course'
-import { Form } from 'element-ui'
+import Vue from 'vue';
+import { getQueryCourses, changeState } from '@/services/course';
+import { Form } from 'element-ui';
 
 export default Vue.extend({
   name: 'CourseList',
-  data () {
+  data() {
     return {
       filterParams: {
         currentPage: 1,
         pageSize: 10,
         courseName: '',
-        status: ''
+        status: '',
       },
       courses: [],
       totalCount: 0,
-      loading: true
-    }
+      loading: true,
+    };
   },
 
-  created () {
-    this.loadCourses()
+  created() {
+    this.loadCourses();
   },
 
   methods: {
-    async loadCourses () {
-      this.loading = true
-      const { data } = await getQueryCourses(this.filterParams)
+    async loadCourses() {
+      this.loading = true;
+      const { data } = await getQueryCourses(this.filterParams);
       data.data.records.forEach((item: any) => {
-        item.isStatusLoading = false
-      })
-      this.courses = data.data.records
-      this.totalCount = data.data.total
-      this.loading = false
+        item.isStatusLoading = false;
+      });
+      this.courses = data.data.records;
+      this.totalCount = data.data.total;
+      this.loading = false;
     },
 
-    handleCurrentChange (page: number) {
-      this.filterParams.currentPage = page
-      this.loadCourses()
+    handleCurrentChange(page: number) {
+      this.filterParams.currentPage = page;
+      this.loadCourses();
     },
 
-    handleFilter () {
-      this.filterParams.currentPage = 1
-      this.loadCourses()
+    handleFilter() {
+      this.filterParams.currentPage = 1;
+      this.loadCourses();
     },
 
-    handleReset () {
-      (this.$refs.form as Form).resetFields()
-      this.filterParams.currentPage = 1
-      this.loadCourses()
+    handleReset() {
+      (this.$refs.form as Form).resetFields();
+      this.filterParams.currentPage = 1;
+      this.loadCourses();
     },
 
-    async onStateChange (course: any) {
-      course.isStatusLoading = true
+    async onStateChange(course: any) {
+      course.isStatusLoading = true;
       const { data } = await changeState({
         courseId: course.id,
-        status: course.status
-      })
-      this.$message.success(`${course.status === 0 ? '下架' : '上架'}成功`)
-      course.isStatusLoading = false
-    }
-  }
-})
+        status: course.status,
+      });
+      this.$message.success(`${course.status === 0 ? '下架' : '上架'}成功`);
+      course.isStatusLoading = false;
+    },
+  },
+});
 </script>
 
 <style lang="scss" scoped>
