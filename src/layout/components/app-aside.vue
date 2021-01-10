@@ -63,12 +63,7 @@ import Vue from 'vue';
 export default Vue.extend({
   name: 'AsideMenu',
   methods: {
-    handleOpen(key: string, keyPath: string): void {
-      console.log(key, keyPath);
-    },
-    handleClose(key: string, keyPath: string): void {
-      console.log(key, keyPath);
-    },
+
   },
 });
 </script>
