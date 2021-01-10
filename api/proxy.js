@@ -15,3 +15,4 @@ module.exports = (req, res) => {
     changeOrigin: true,
   })(req, res)
 }
+
